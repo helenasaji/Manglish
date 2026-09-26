@@ -6,7 +6,7 @@ const MAL_CHAR_MAP = {
     'പ': 'pa', 'ഫ': 'pha', 'ബ': 'ba', 'ഭ': 'bha', 'മ': 'ma', 'യ': 'ya', 'ര': 'ra', 'ല': 'la', 'വ': 'va', 'ശ': 'sha',
     'ഷ': 'sha', 'സ': 'sa', 'ഹ': 'ha', 'ള': 'la', 'ഴ': 'zha', 'റ': 'ra',
     'ൺ': 'n', 'ൻ': 'n', 'ർ': 'r', 'ൽ': 'l', 'ൾ': 'l', 'ൿ': 'k',
-    'ാ': 'a', 'ി': 'i', 'ീ': 'ee', 'ു': 'u', 'ൂ': 'oo', 'െ': 'e', 'േ': 'e', 'ൈ': 'ai', 'ൊ': 'o', 'ോ': 'o', 'ം': 'm',
+    'ാ': 'a', 'ി': 'i', 'ീ': 'ee', 'ു': 'u', 'ൂ': 'oo', 'െ': 'e', 'േ': 'e', 'ൈ': 'ai', 'ൊ': 'o', 'ோ': 'o', 'ം': 'm',
     '്': '',
     '¢': 'nta', '£': 'tta', '¤': 'nda', '¥': 'nga', '¦': 'ncha', '§': 'mba', '¨': 'kka'
 };
@@ -14,12 +14,13 @@ const MAL_CHANDRAKKALA = '്';
 
 // --- TAMIL SETUP ---
 const TAMIL_CHAR_MAP = {
-    'அ': 'a', 'ஆ': 'aa', 'இ': 'i', 'ஈ': 'ee', 'உ': 'u', 'ஊ': 'oo', 'எ': 'e', 'ஏ': 'e', 'ஐ': 'ai', 'ஒ': 'o', 'ஓ': 'o', 'ஔ': 'au',
+    'அ': 'a', 'ஆ': 'aa', 'இ': 'i', 'ஈ': 'ee', 'உ': 'u', 'உ': 'u', 'ஊ': 'oo', 'எ': 'e', 'ஏ': 'e', 'ஐ': 'ai', 'ஒ': 'o', 'ஓ': 'o', 'ஔ': 'au',
     'க': 'ka', 'ங': 'nga', 'ச': 'cha', 'ஞ': 'nja', 'ட': 'ta', 'ண': 'na', 'த': 'tha', 'ந': 'na', 'ப': 'pa', 'ம': 'ma',
     'ய': 'ya', 'ர': 'ra', 'ல': 'la', 'வ': 'va', 'ழ': 'zha', 'ள': 'la', 'ற': 'ra', 'ன': 'na',
-    'ஷ': 'sha', 'ஸ': 'sa', 'ஹ': 'ha', 'ஜ': 'ja', 'க்ஷ': 'ksha', // Grantha consonants
+    'ஷ': 'sha', 'ஸ': 'sa', 'ஹ': 'ha', 'ஜ': 'ja', 'க்ஷ': 'ksha', 
     'ா': 'a', 'ி': 'i', 'ீ': 'ee', 'ு': 'u', 'ூ': 'oo', 'ெ': 'e', 'ே': 'e', 'ை': 'ai', 'ொ': 'o', 'ோ': 'o', 'ௌ': 'au',
-    '்': '' // Pulli
+    '்': '',
+    '©': 'tra' // Placeholder for ற்ற
 };
 const TAM_PULLI = '்';
 
@@ -35,6 +36,9 @@ function transliterate(text, isMalayalam) {
         text = text.replace(/റ്റ/g, "£").replace(/ണ്ട/g, "¤").replace(/ങ്ങ/g, "¥");
         text = text.replace(/ഞ്ച/g, "¦").replace(/മ്പ/g, "§").replace(/ക്ക/g, "¨");
         text = text.replace(/ര്/g, "ru").replace(/ണ്/g, "nu");
+    } else {
+        // Tamil specific pre-processing
+        text = text.replace(/ற்ற/g, "©");
     }
 
     let result = "";
