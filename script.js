@@ -2,14 +2,14 @@
 const MAL_CHAR_MAP = {
     'അ': 'a', 'ആ': 'aa', 'ഇ': 'i', 'ഈ': 'ee', 'ഉ': 'u', 'ഊ': 'oo', 'എ': 'e', 'ഏ': 'è', 'ഐ': 'ai', 'ഒ': 'o', 'ഓ': 'ò',
     'ക': 'ka', 'ഖ': 'kha', 'ഗ': 'ga', 'ഘ': 'gha', 'ങ': 'nga', 'ച': 'cha', 'ഛ': 'chha', 'ജ': 'ja', 'ഝ': 'jha', 'ഞ': 'nja',
-    'ട': 'ta', 'ഠ': 'tha', 'ഡ': 'da', 'ഢ': 'dha', 'ണ': 'na', 'ത': 'tha', 'ഥ': 'tha', 'ദ': 'dha', 'ധ': 'dha', 'ന': 'na',
-    'പ': 'pa', 'ഫ': 'fa', 'ബ': 'ba', 'ഭ': 'bha', 'മ': 'ma', 'യ': 'ya', 'ര': 'ra', 'ല': 'la', 'വ': 'va', 'ശ': 'sha',
+    'ട': 'ta', 'ഠ': 'tha', 'ഡ': 'da', 'ഢ': 'dha', 'ണ': 'na', 'ത': 'tha', 'ഥ': 'tha', 'ദ': 'da', 'ധ': 'dha', 'ന': 'na',
+    'പ': 'pa', 'ഫ': 'pha', 'ബ': 'ba', 'ഭ': 'bha', 'മ': 'ma', 'യ': 'ya', 'ര': 'ra', 'ല': 'la', 'വ': 'va', 'ശ': 'sha',
     'ഷ': 'sha', 'സ': 'sa', 'ഹ': 'ha', 'ള': 'la', 'ഴ': 'zha', 'റ': 'ra',
     'ൺ': 'n', 'ൻ': 'n', 'ർ': 'r', 'ൽ': 'l', 'ൾ': 'l', 'ൿ': 'k',
     'ാ': 'a', 'ി': 'i', 'ീ': 'ee', 'ു': 'u', 'ൂ': 'oo', 'െ': 'e', 'േ': 'è', 'ൈ': 'ai', 'ൊ': 'o', 'ോ': 'ò', 'ം': 'm',
     '്': '',
     '¢': 'nta', '£': 'tta', '¤': 'nda', '¥': 'nga', '¦': 'ncha', '§': 'mba', '¨': 'kka',
-    '«': 'tta' // Placeholder for ട്ട so it doesn't get turned into 'dda'
+    '«': 'tta' // Placeholder for ട്ട
 };
 const MAL_CHANDRAKKALA = '്';
 
@@ -36,7 +36,7 @@ function transliterate(text, isMalayalam) {
         text = text.replace(/ന്റ/g, "¢").replace(/ൻ്റ/g, "¢").replace(/ൻറ/g, "¢");
         text = text.replace(/റ്റ/g, "£").replace(/ണ്ട/g, "¤").replace(/ങ്ങ/g, "¥");
         text = text.replace(/ഞ്ച/g, "¦").replace(/മ്പ/g, "§").replace(/ക്ക/g, "¨");
-        text = text.replace(/ട്ട/g, "«"); // Protects double-T from the 'da' rule
+        text = text.replace(/ട്ട/g, "«"); 
         text = text.replace(/ര്/g, "ru").replace(/ണ്/g, "nu");
     } else {
         text = text.replace(/ற்ற/g, "©");
@@ -53,11 +53,9 @@ function transliterate(text, isMalayalam) {
             
             // Dynamic pronunciation rule for 'ട'
             if (isMalayalam && char === 'ട') {
-                // If it's the very first letter OR preceded by a space or punctuation, keep it 'ta'
                 if (i === 0 || /[\s\.,!?(){}[\]"'\n]/.test(text[i - 1])) {
                     mappedChar = 'ta';
                 } else {
-                    // Otherwise, it's in the middle of a word, make it 'da'
                     mappedChar = 'da';
                 }
             }
@@ -78,7 +76,6 @@ function transliterate(text, isMalayalam) {
                     }
                 }
             }
-            // Use our dynamically adjusted mappedChar here
             result += mappedChar; 
         } else {
             result += char; 
@@ -88,15 +85,16 @@ function transliterate(text, isMalayalam) {
     return result;
 }
 
-// --- UI STATE MANAGEMENT & DOM SAFTEY ---
+// --- UI STATE MANAGEMENT & DOM SAFETY ---
 let currentMode = 'malayalam';
 
 const tabMal = document.getElementById('tabMalayalam');
 const tabTam = document.getElementById('tabTamil');
-const inputField = document.getElementById('indicInput') || document.getElementById('malayalamInput');
-const outputField = document.getElementById('englishOutput') || document.getElementById('manglishOutput');
+const inputField = document.getElementById('indicInput');
+const outputField = document.getElementById('englishOutput');
 const title = document.getElementById('appTitle');
 const convertBtn = document.getElementById('convertBtn');
+const themeBulb = document.getElementById('themeToggleBulb');
 
 if (tabMal && tabTam) {
     tabMal.addEventListener('click', () => {
@@ -129,5 +127,18 @@ if (convertBtn && inputField && outputField) {
         const text = inputField.value;
         const isMalayalam = currentMode === 'malayalam';
         outputField.value = transliterate(text, isMalayalam);
+    });
+}
+
+// --- DARK MODE TOGGLE ---
+let isDarkMode = false;
+
+if (themeBulb) {
+    themeBulb.addEventListener('click', () => {
+        isDarkMode = !isDarkMode;
+        document.body.classList.toggle('dark-mode', isDarkMode);
+        
+        // Updates image source between the two files in the images folder
+        themeBulb.src = isDarkMode ? 'images/notglowingbulb.png' : 'images/glowingbulb.png';
     });
 }
