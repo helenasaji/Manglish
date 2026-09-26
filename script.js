@@ -16,15 +16,21 @@ const CHAR_MAP = {
 
     // Vowel Signs
     'ാ': 'a', 'ി': 'i', 'ീ': 'ee', 'ു': 'u', 'ൂ': 'oo', 'െ': 'e', 'േ': 'e', 'ൈ': 'ai', 'ൊ': 'o', 'ോ': 'o', 
-    'ം': 'm'
+    'ം': 'm',
+    
+    // Safety fallback: If Chandrakkala is ever evaluated on its own, output nothing instead of a raw symbol
+    '്': '' 
 };
 
 const CHANDRAKKALA = '്';
 const VOWEL_SIGNS = ['a', 'i', 'ee', 'u', 'oo', 'e', 'ai', 'o'];
 
 function malayalamToManglish(text) {
-    // 1. Pre-process common conjuncts and special endings
-    text = text.replace(/ന്റ/g, "nt"); // Fixes എന്റെ -> ente
+    // 1. Pre-process common conjuncts and special endings (Handles different keyboard typing styles)
+    text = text.replace(/ന്റ/g, "nt");  // Standard Na + Chandrakkala + Ra
+    text = text.replace(/ൻ്റ/g, "nt"); // Chillu N + Chandrakkala + Ra (This fixes your "en്re" issue)
+    text = text.replace(/ൻറ/g, "nt");  // Chillu N + Ra
+    
     text = text.replace(/ര്/g, "ru");  // Fixes പേര് -> peru
     text = text.replace(/ണ്/g, "nu");  // Fixes എന്നാണ് -> ennanu
     text = text.replace(/ണ്ട/g, "nd");
@@ -40,7 +46,7 @@ function malayalamToManglish(text) {
     while (i < text.length) {
         let char = text[i];
         
-        if (CHAR_MAP[char]) {
+        if (CHAR_MAP[char] !== undefined) {
             if (i + 1 < text.length) {
                 let nextChar = text[i + 1];
                 let mappedChar = CHAR_MAP[char];
