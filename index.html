@@ -4,17 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Malayalam to Manglish Converter</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-        .container { display: flex; flex-direction: column; gap: 1rem; }
-        textarea { width: 100%; height: 150px; padding: 0.5rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px; }
-        button { padding: 0.75rem; background: #0366d6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; }
-        button:hover { background: #0056b3; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Manglish Converter</h1>
     <div class="container">
+        <h1>Manglish Converter</h1>
         <textarea id="malayalamInput" placeholder="മലയാളം ഇവിടെ ടൈപ്പ് ചെയ്യുക..."></textarea>
         <button id="convertBtn">Convert to Manglish</button>
         <textarea id="manglishOutput" placeholder="Manglish output will appear here..." readonly></textarea>
