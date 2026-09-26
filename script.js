@@ -38,7 +38,7 @@ function malayalamToManglish(text) {
     text = text.replace(/ഞ്ച/g, "nch");
     text = text.replace(/മ്പ/g, "mb");
     text = text.replace(/ക്ക/g, "kk");
-    
+    text = text.replace(/റ്റ/g, "tt");
     // 2. Standard character-by-character processing
     let result = "";
     let i = 0;
