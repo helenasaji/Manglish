@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malayalam to Manglish Converter</title>
+    <title>Indic to English Converter</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Manglish Converter</h1>
-        <textarea id="malayalamInput" placeholder="മലയാളം ഇവിടെ ടൈപ്പ് ചെയ്യുക..."></textarea>
-        <button id="convertBtn">Convert to Manglish</button>
-        <textarea id="manglishOutput" placeholder="Manglish output will appear here..." readonly></textarea>
+        <h1 id="appTitle">Manglish Converter</h1>
+        
+        <div class="tabs">
+            <button id="tabMalayalam" class="tab active">Malayalam</button>
+            <button id="tabTamil" class="tab">Tamil</button>
+        </div>
+
+        <textarea id="indicInput" placeholder="മലയാളം ഇവിടെ ടൈപ്പ് ചെയ്യുക..."></textarea>
+        <button id="convertBtn">Convert</button>
+        <textarea id="englishOutput" placeholder="Output will appear here..." readonly></textarea>
     </div>
     <script src="script.js"></script>
 </body>
