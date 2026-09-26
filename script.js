@@ -23,6 +23,16 @@ const CHANDRAKKALA = '്';
 const VOWEL_SIGNS = ['a', 'i', 'ee', 'u', 'oo', 'e', 'ai', 'o'];
 
 function malayalamToManglish(text) {
+    // 1. Pre-process common conjuncts before standard mapping
+    text = text.replace(/ന്റ/g, "nt");
+    text = text.replace(/ണ്ട/g, "nd");
+    text = text.replace(/ങ്ങ/g, "ng");
+    text = text.replace(/ഞ്ച/g, "nch");
+    text = text.replace(/മ്പ/g, "mb");
+    text = text.replace(/ക്ക/g, "kk");
+    text = text.replace(/ണ്/g, "nu"); // Ensures words like "എന്നാണ്" end in "nu" instead of "n"
+    
+    // 2. Standard character-by-character processing
     let result = "";
     let i = 0;
     
@@ -53,7 +63,7 @@ function malayalamToManglish(text) {
             }
             result += CHAR_MAP[char];
         } else {
-            result += char; 
+            result += char; // Keep spaces and English punctuation
         }
         i++;
     }
