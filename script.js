@@ -1,7 +1,6 @@
 // --- MALAYALAM SETUP ---
 const MAL_CHAR_MAP = {
-    'അ': 'a', 'ആ': 'aa', 'ഇ': 'i', 'ഈ': 'ee', 'ഉ': 'u', 'ഊ': 'oo', 'എ': 'e', 'ഏ': 'è', 'ഐ': 'ai', 'ഒ': 'o', 'ഓ': 'o
-        ò',
+    'അ': 'a', 'ആ': 'aa', 'ഇ': 'i', 'ഈ': 'ee', 'ഉ': 'u', 'ഊ': 'oo', 'എ': 'e', 'ഏ': 'è', 'ഐ': 'ai', 'ഒ': 'o', 'ഓ': 'ò',
     'ക': 'ka', 'ഖ': 'kha', 'ഗ': 'ga', 'ഘ': 'gha', 'ങ': 'nga', 'ച': 'cha', 'ഛ': 'chha', 'ജ': 'ja', 'ഝ': 'jha', 'ഞ': 'nja',
     'ട': 'ta', 'ഠ': 'tha', 'ഡ': 'da', 'ഢ': 'dha', 'ണ': 'na', 'ത': 'tha', 'ഥ': 'tha', 'ദ': 'da', 'ധ': 'dha', 'ന': 'na',
     'പ': 'pa', 'ഫ': 'pha', 'ബ': 'ba', 'ഭ': 'bha', 'മ': 'ma', 'യ': 'ya', 'ര': 'ra', 'ല': 'la', 'വ': 'va', 'ശ': 'sha',
@@ -25,7 +24,8 @@ const TAMIL_CHAR_MAP = {
 };
 const TAM_PULLI = '்';
 
-const VOWEL_SIGNS = ['a', 'i', 'ee', 'u', 'oo', 'e', 'ai', 'o', 'au'];
+// Added 'è' and 'ò' to this array so they correctly replace the inherent 'a'
+const VOWEL_SIGNS = ['a', 'i', 'ee', 'u', 'oo', 'e', 'è', 'ai', 'o', 'ò', 'au'];
 
 // --- CONVERSION LOGIC ---
 function transliterate(text, isMalayalam) {
