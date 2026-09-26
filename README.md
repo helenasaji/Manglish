@@ -1,2 +1,1 @@
-# Manglish convertor &
-# Tanglish convertor 
+# Manglish 
