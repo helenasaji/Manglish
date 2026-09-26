@@ -8,7 +8,8 @@ const MAL_CHAR_MAP = {
     'ൺ': 'n', 'ൻ': 'n', 'ർ': 'r', 'ൽ': 'l', 'ൾ': 'l', 'ൿ': 'k',
     'ാ': 'a', 'ി': 'i', 'ീ': 'ee', 'ു': 'u', 'ൂ': 'oo', 'െ': 'e', 'േ': 'è', 'ൈ': 'ai', 'ൊ': 'o', 'ോ': 'ò', 'ം': 'm',
     '്': '',
-    '¢': 'nta', '£': 'tta', '¤': 'nda', '¥': 'nga', '¦': 'ncha', '§': 'mba', '¨': 'kka'
+    '¢': 'nta', '£': 'tta', '¤': 'nda', '¥': 'nga', '¦': 'ncha', '§': 'mba', '¨': 'kka',
+    '«': 'tta' // Placeholder for ട്ട so it doesn't get turned into 'dda'
 };
 const MAL_CHANDRAKKALA = '്';
 
@@ -24,7 +25,6 @@ const TAMIL_CHAR_MAP = {
 };
 const TAM_PULLI = '்';
 
-// Added 'è' and 'ò' to this array so they correctly replace the inherent 'a'
 const VOWEL_SIGNS = ['a', 'i', 'ee', 'u', 'oo', 'e', 'è', 'ai', 'o', 'ò', 'au'];
 
 // --- CONVERSION LOGIC ---
@@ -36,9 +36,9 @@ function transliterate(text, isMalayalam) {
         text = text.replace(/ന്റ/g, "¢").replace(/ൻ്റ/g, "¢").replace(/ൻറ/g, "¢");
         text = text.replace(/റ്റ/g, "£").replace(/ണ്ട/g, "¤").replace(/ങ്ങ/g, "¥");
         text = text.replace(/ഞ്ച/g, "¦").replace(/മ്പ/g, "§").replace(/ക്ക/g, "¨");
+        text = text.replace(/ട്ട/g, "«"); // Protects double-T from the 'da' rule
         text = text.replace(/ര്/g, "ru").replace(/ണ്/g, "nu");
     } else {
-        // Tamil specific pre-processing
         text = text.replace(/ற்ற/g, "©");
     }
 
@@ -49,9 +49,21 @@ function transliterate(text, isMalayalam) {
         let char = text[i];
         
         if (charMap[char] !== undefined) {
+            let mappedChar = charMap[char];
+            
+            // Dynamic pronunciation rule for 'ട'
+            if (isMalayalam && char === 'ട') {
+                // If it's the very first letter OR preceded by a space or punctuation, keep it 'ta'
+                if (i === 0 || /[\s\.,!?(){}[\]"'\n]/.test(text[i - 1])) {
+                    mappedChar = 'ta';
+                } else {
+                    // Otherwise, it's in the middle of a word, make it 'da'
+                    mappedChar = 'da';
+                }
+            }
+
             if (i + 1 < text.length) {
                 let nextChar = text[i + 1];
-                let mappedChar = charMap[char];
                 
                 if (mappedChar.endsWith('a') && mappedChar.length > 0) {
                     if (charMap[nextChar] !== undefined && VOWEL_SIGNS.includes(charMap[nextChar])) {
@@ -66,7 +78,8 @@ function transliterate(text, isMalayalam) {
                     }
                 }
             }
-            result += charMap[char];
+            // Use our dynamically adjusted mappedChar here
+            result += mappedChar; 
         } else {
             result += char; 
         }
@@ -78,7 +91,6 @@ function transliterate(text, isMalayalam) {
 // --- UI STATE MANAGEMENT & DOM SAFTEY ---
 let currentMode = 'malayalam';
 
-// Grab elements, with fallbacks to your old HTML IDs just in case
 const tabMal = document.getElementById('tabMalayalam');
 const tabTam = document.getElementById('tabTamil');
 const inputField = document.getElementById('indicInput') || document.getElementById('malayalamInput');
@@ -86,7 +98,6 @@ const outputField = document.getElementById('englishOutput') || document.getElem
 const title = document.getElementById('appTitle');
 const convertBtn = document.getElementById('convertBtn');
 
-// Only run tab logic if the tabs actually exist in your HTML
 if (tabMal && tabTam) {
     tabMal.addEventListener('click', () => {
         currentMode = 'malayalam';
@@ -113,7 +124,6 @@ if (tabMal && tabTam) {
     });
 }
 
-// Attach conversion logic
 if (convertBtn && inputField && outputField) {
     convertBtn.addEventListener('click', () => {
         const text = inputField.value;
