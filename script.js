@@ -34,7 +34,7 @@ function transliterate(text, isMalayalam) {
 
     if (isMalayalam) {
         text = text.replace(/ന്റ/g, "¢").replace(/ൻ്റ/g, "¢").replace(/ൻറ/g, "¢");
-        text = text.replace(/റ്റ/g, "£").replace(/ണ്ട/g, "¤").replace(/ങ്ങ/g, "¥");
+        text = text.replace(/റ്റ/g, "£").replace(/ണ്ട/g, "¤").replace(/ണ്ഡ/g, "¤").replace(/ങ്ങ/g, "¥");
         text = text.replace(/ഞ്ച/g, "¦").replace(/മ്പ/g, "§").replace(/ക്ക/g, "¨");
         text = text.replace(/ട്ട/g, "«"); 
         text = text.replace(/ര്/g, "ru").replace(/ണ്/g, "nu");
