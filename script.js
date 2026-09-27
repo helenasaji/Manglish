@@ -9,7 +9,7 @@ const MAL_CHAR_MAP = {
     'ാ': 'a', 'ി': 'i', 'ീ': 'ee', 'ു': 'u', 'ൂ': 'oo', 'ൃ': 'ru', 'െ': 'e', 'േ': 'è', 'ൈ': 'ai', 'ൊ': 'o', 'ോ': 'ò', 'ൗ': 'au', 'ം': 'm',
     '്': '',
     '¢': 'nta', '£': 'tta', '¤': 'nda', '¥': 'nga', '¦': 'ncha', '§': 'mba', '¨': 'kka',
-    '«': 'tta' // Placeholder for ട്ട
+    '«': 'tta', '¬': 'nja' // Placeholder for ട്ട
 };
 const MAL_CHANDRAKKALA = '്';
 
