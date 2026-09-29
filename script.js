@@ -9,7 +9,7 @@ const MAL_CHAR_MAP = {
     'ാ': 'a', 'ി': 'i', 'ീ': 'ee', 'ു': 'u', 'ൂ': 'oo', 'ൃ': 'ru', 'െ': 'e', 'േ': 'è', 'ൈ': 'ai', 'ൊ': 'o', 'ോ': 'ò', 'ൗ': 'au', 'ം': 'm',
     '്': '',
     '¢': 'nta', '£': 'tta', '¤': 'nda', '¥': 'nga', '¦': 'ncha', '§': 'mba', '¨': 'kka',
-    '«': 'tta', '¬': 'nja' // Placeholder for ട്ട
+    '«': 'tta', '¬': 'nja' '®': 'cha', '¯': 'tha' 
 };
 const MAL_CHANDRAKKALA = '്';
 
@@ -36,7 +36,7 @@ function transliterate(text, isMalayalam) {
         text = text.replace(/ന്റ/g, "¢").replace(/ൻ്റ/g, "¢").replace(/ൻറ/g, "¢");
         text = text.replace(/റ്റ/g, "£").replace(/ണ്ട/g, "¤").replace(/ണ്ഡ/g, "¤").replace(/ങ്ങ/g, "¥");
         text = text.replace(/ഞ്ച/g, "¦").replace(/മ്പ/g, "§").replace(/ക്ക/g, "¨");
-        text = text.replace(/ട്ട/g, "«"); 
+        text = text.replace(/ട്ട/g, "«").replace(/ച്ച/g, "®").replace(/ത്ത/g, "¯"); 
         text = text.replace(/ര്/g, "ru").replace(/ണ്/g, "nu");
     } else {
         text = text.replace(/ற்ற/g, "©");
